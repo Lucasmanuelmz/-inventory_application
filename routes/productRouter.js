@@ -5,6 +5,6 @@ const asyncHandler = require('express-async-handler');
 
 productRouter.get('/create',asyncHandler(productController.productCreateGet));
 productRouter.post('/create',asyncHandler(productController.productCreatePost));
-productRouter.get('/', asyncHandler(productController.displayProducts))
+productRouter.get('/', asyncHandler(productController.displayAllProducts))
 
 module.exports = productRouter;
