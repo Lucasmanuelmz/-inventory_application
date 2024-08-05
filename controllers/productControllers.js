@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+
 exports.displayAllProducts = async (req, res) => {
   try {
     const products = await db.getAllProducts();
@@ -29,12 +30,18 @@ exports.productCreateGet = async (req, res) => {
 };
 
 exports.productCreatePost = async (req, res) => {
-    const { name, description, price, category_id, quantity,  alt, location } = req.body;
+    const { name, description, price, 
+      category_id, quantity,  alt, location } = req.body;
     const urlImage = req.file ? `uploads/${req.file.filename}` : null;
   
-    if (name && description && price && category_id && urlImage && quantity  && alt && location) {
+    if (name && description && 
+      price && category_id && 
+      urlImage && quantity  && 
+      alt && location) {
       try {
-        await db.insertProductsInStore(name, description, price, category_id, urlImage, alt, quantity, location);
+        await db.insertProductsInStore(name, 
+          description, price, category_id, urlImage, 
+          alt, quantity, location);
         res.redirect('/');
       } catch (error) {
         console.error("Can't save product:", error.message);

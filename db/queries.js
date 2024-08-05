@@ -1,11 +1,11 @@
-const pool = require('./pool');
+const database = require('./pool');
 
 exports.getAllProducts = async() => {
   try {
-    const { rows } = await pool.query(`
+    const {rows} = await database.query(`
       SELECT products.name, products.description, products.price, productimage.url AS image_url, 
       productimage.alt AS image_alt FROM products JOIN productimage ON products.id = productimage.product_id`);
-    return rows;
+      return rows;
   } catch (error) {
     throw Error('Erro ao carregar produtos');
   }  
@@ -13,7 +13,7 @@ exports.getAllProducts = async() => {
 
 exports.getAllCategories = async() => {
   try {
-    const { rows } = await pool.query('SELECT * FROM category');
+    const {rows} = await database.query('SELECT * FROM category');
     return rows;
   } catch (error) {
     throw Error('Erro ao carregar categorias');
@@ -21,7 +21,7 @@ exports.getAllCategories = async() => {
 }
 
 exports.insertProductsInStore = async(name, description, price, categoryId, url, text, quantity, location) => {
-  const client = await pool.connect();
+  const client = await database.connect();
   
   try {
     await client.query('BEGIN');

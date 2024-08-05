@@ -5,15 +5,17 @@ const expressAsyncHandler = require('express-async-handler');
 const categoryRouter = require('./routes/categoryRouter');
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const userRouter = require('./routes/userRouter');
 const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 
+const SECRET_KEY = process.env.SESSION_SECRET;
+
 app.use(session(
     {
-     secret: process.env.SESSION_SECRET || 'cat',
+     secret: SECRET_KEY,
      resave: false, 
      saveUninitialized: false,
     }));
@@ -24,10 +26,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.set('view engine', 'ejs');
-app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')))
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({extended: true}));
 app.use('/products', productRouter);
 app.use('/products/category', categoryRouter);
 app.use('/', userRouter);
