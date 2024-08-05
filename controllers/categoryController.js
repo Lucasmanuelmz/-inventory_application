@@ -1,7 +1,7 @@
 const db = require('../db/queries');
 
 exports.categoryCreateGet = async(req, res) => {
-    const categories = await db.getAllcategories()
+    const categories = await db.getAllCategories();
  res.render('category',{
     title: 'My categories',
     categories
