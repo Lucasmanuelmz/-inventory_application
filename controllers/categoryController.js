@@ -1,7 +1,7 @@
-const db = require('../db/queries');
+const db = require('../models/categoryModel');
 
 exports.categoryCreateGet = async(req, res) => {
-    const categories = await db.getAllCategories()
+    const categories = await db.categoryStorage()
  res.render('category',{
     title: 'My categories',
     categories
@@ -31,4 +31,16 @@ exports.deleteCategoryProduct = async(req, res) => {
     }catch(error) {
       throw Error('Nao conseguimos deletar esta categoria')
     }
+}
+
+exports.updateCategory = async(req, res) => {
+  const id = req.params.id;
+ const category = await db.categoryUpdateGet(id)
+  res.render('admin/category/update', {category})
+}
+
+exports.updateCategoryDBPost = async(req, res) => {
+  const {name, id} = req.body;
+  await db.categoryUpdatePost(name, id);
+  res.redirect('/')
 }

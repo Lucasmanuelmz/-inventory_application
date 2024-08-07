@@ -48,8 +48,11 @@ userRouter.post('/login/password', passport.authenticate('local', {
   failureRedirect: ('/signup')
 })
 );
-
 userRouter.get('/user', userController.createUserGet);
 userRouter.post('/user', userController.createNewUserPost);
 userRouter.get('/signup', userController.createNewUserGet);
+userRouter.get('/update/:id/user', userController.updateUserGet);
+userRouter.post('/update/user', userController.updateUserPost);
+userRouter.get('/display', userController.getUsersView);
+userRouter.post('/delete/user', userController.deleteUserFromTable);
 module.exports = userRouter;

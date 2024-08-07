@@ -7,8 +7,11 @@ const imageStorage= require('../midlewares/uploads');
 
 const upload = multer({storage: imageStorage})
 
-productRouter.get('/create',asyncHandler(productController.productCreateGet));
-productRouter.post('/create',upload.single('photo'), asyncHandler(productController.productCreatePost));
-productRouter.get('/', asyncHandler(productController.displayAllProducts))
+productRouter.get('/create', asyncHandler(productController.productCreateGet));
+productRouter.post('/create', upload.single('photo'), asyncHandler(productController.productCreatePost));
+productRouter.get('/all-products', productController.productAdminGet);
+productRouter.get('/:id/edit', productController.renderViewProductGetUpdate);
+productRouter.post('/product/delete', productController.deleteProductInTable);
+productRouter.post('/update', productController.updateProductInTable)
 
 module.exports = productRouter;

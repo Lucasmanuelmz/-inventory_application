@@ -27,13 +27,14 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.json())
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use('/products', productRouter);
 app.use('/products/category', categoryRouter);
 app.use('/', userRouter);
-app.get('/', expressAsyncHandler(productController.displayAllProducts));
+app.get('/', expressAsyncHandler(productController.displayProductStorage));
 
 app.listen(PORT, () => {
     console.log('Servidor iniciado com sucesso')

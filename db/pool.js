@@ -1,12 +1,25 @@
 const {Pool} = require('pg');
-require('dotenv').config()
-const user_password = process.env.DB_PASSWORD;
-const user_name = process.env.USER_ROLE;
+require('dotenv').config();
 
-module.exports = new Pool({
+const userRole = process.env.USER_ROLE; //USER_ROLE = 'lucas',
+const password = process.env.DB_PASSWORD;//DB_PASSWORD = '4026.Alface'
+
+const pool = new Pool({
     host: 'localhost',
     database: 'product',
-    password: user_password,
-    user: user_name,
+    user: userRole ,
+    password: password,
     port: '5432'
 })
+
+async function tryConnection() {
+    try {
+       await pool.connect();
+      console.log('connected in database')
+    }catch(error) {
+        console.log('Nao foi possivel se connectar ao banco de dados')
+    }
+}
+tryConnection()
+
+module.exports = pool;

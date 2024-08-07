@@ -5,30 +5,31 @@
     <div class="bg-gray-100 flex items-center justify-center min-h-screen">
 
       <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
-          <h2 class="text-2xl font-bold mb-6 text-gray-800">Add new product</h2>
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">Update product</h2>
           
-          <form enctype="multipart/form-data" action="/products/create" method="post">
+          <form action="/products/update" method="post">
+            <input type="hidden" name="id" value="<%=product.id%>">
               <div class="mb-4">
                   <label for="name" class="block text-gray-700 font-semibold mb-2">Product name</label>
-                  <input type="text" id="name" name="name" required
+                  <input type="text" id="name" name="name" value="<%=product.name%>" required
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
               </div>
   
               <div class="mb-4">
                   <label for="description" class="block text-gray-700 font-semibold mb-2">Product description</label>
-                  <textarea id="description" name="description" rows="4" required
+                  <textarea id="description" name="description" value="<%=product.description%>" rows="4" required
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
               </div>
   
               <div class="mb-4">
                   <label for="price" class="block text-gray-700 font-semibold mb-2">Price</label>
-                  <input type="number" id="price" name="price" step="0.01" required
+                  <input type="number" id="price" name="price" value="<%=product.price%>" step="0.01" required
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
               </div>
   
               <div class="mb-4">
                   <label for="category" class="block text-gray-700 font-semibold mb-2">Category</label>
-                  <select id="category" name="category_id" required
+                  <select id="category" name="category_id" value="<%=product.category_id%>" required
                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                       <option value="" disabled selected>Select an category</option>
                       <%categories.forEach(category => {%>
@@ -37,33 +38,9 @@
                   </select>
               </div>
   
-              <div class="mb-4">
-                  <label for="file" class="block text-gray-700 font-semibold mb-2">Upload an image of product</label>
-                  <input type="file" id="file" name="photo" accept="image/*"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              </div>
-
-              <div class="mb-4">
-                <label for="alt" class="block text-gray-700 font-semibold mb-2">Description for image</label>
-                <input type="text" id="alt" name="alt" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-  
-              <div class="mb-4">
-                  <label for="quantity" class="block text-gray-700 font-semibold mb-2">Quantity in stock</label>
-                  <input type="number" id="quantity" name="quantity" required
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              </div>
-
-              <div class="mb-4">
-                <label for="location" class="block text-gray-700 font-semibold mb-2">Location</label>
-                <input type="text" id="location" name="location" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-  
               <div class="flex justify-end">
                   <button type="submit" class="bg-indigo-800 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-800">
-                      Add product
+                      Update product
                   </button>
               </div>
           </form>

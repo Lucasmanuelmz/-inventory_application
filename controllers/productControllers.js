@@ -1,8 +1,9 @@
-const db = require('../db/queries');
+const db = require('../models/productModel');
 
-exports.displayAllProducts = async (req, res) => {
+exports.displayProductStorage = async (req, res) => {
   try {
-    const products = await db.getAllProducts();
+    const products = await db.productStorage();
+    console.log('Produtos: ',products);
     if (products.length > 0) {
       res.render('index', {
         title: 'Lista de produtos',
@@ -17,7 +18,8 @@ exports.displayAllProducts = async (req, res) => {
 
 exports.productCreateGet = async (req, res) => {
   try {
-    const categories = await db.getAllCategories();
+    const categories = await db.categoryStorage();
+    console.log('categorias: ',categories)
     if (categories.length > 0) {
       res.render('product', { categories });
     } else {
@@ -51,4 +53,35 @@ exports.productCreatePost = async (req, res) => {
       res.status(400).send('Incomplete data');
     }
   };
+
+  exports.productAdminGet = async(req, res) => {
+    const products = await db.productStorageJoinedByCategory()
+    res.render('view-product', {
+      title: 'All products in table',
+      products
+    })
+  }
+
+  exports.renderViewProductGetUpdate = async(req, res) => {
+    const id = req.params.id;
+    try {
+     const product = await db.updateProductGet(id);
+     res.render('upadate-product', {
+      product
+     })
+    }catch(error) {
+      throw Error ('Product not found')
+    }
+  }
+
+  exports.deleteProductInTable = async(req, res) => {
+    const id = req.body.id;
+    await db.deleteProductPost(id);
+    res.redirect('/')
+  }
   
+  exports.updateProductInTable = async(res, req) => {
+    const {name, description, price, category_id, id} = req.body;
+    await db.updateProductGet(name, description, price, category_id, id);
+    res.redirect('/')
+  }
